@@ -69,3 +69,6 @@ This project leverages a modern and robust technology stack:
        ▼
 [Gmail: Reply to a message] ───> [Customer Inbox]
 
+## 🖼️ Workflow Screenshot
+![RAG Email Support Workflow](./workflow.png)
+
