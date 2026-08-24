@@ -1,0 +1,158 @@
+{
+  "name": "Pincone Data Loader",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -544,
+        -96
+      ],
+      "id": "a929052c-19a1-4bd8-8500-63059bf706d0",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "79dbc5ee-74ed-4ddd-a10f-25ac59fb1c34",
+              "name": "text",
+              "value": "=# Company Knowledge Base & Support Policies\n\n## 1. Shipping & Delivery Policy\n- Standard shipping takes 3 to 5 business days within the country.\n- Express shipping takes 1 to 2 business days at an extra charge of $15.\n- International shipping is currently unavailable.\n- Once an order is shipped, customers receive a tracking link via email.\n\n## 2. Refund & Return Policy\n- Customers can request a full refund within 30 days of purchase.\n- Items must be unused and in their original packaging.\n- Refund processing takes 5 to 7 business days to reflect back on the original payment method.\n- Sale items are final and cannot be returned unless damaged upon delivery.\n\n## 3. Account & Subscription Management\n- Users can reset their passwords by clicking the \"Forgot Password\" link on the login page.\n- Subscriptions can be upgraded, downgraded, or canceled anytime from the Account Settings dashboard.\n- Annual subscriptions come with a 20% discount compared to monthly plans.\n\n## 4. Business Hours & Support Contact\n- Our customer support team is available Monday to Friday, 9:00 AM to 6:00 PM (EST).\n- You can reach us via email at support@example.com or through our live chat on the website.\n- Queries received over the weekend will be addressed on the next business day.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -336,
+        -96
+      ],
+      "id": "b80a079a-1d82-4590-bb02-78a26d63ddc9",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "support-kb",
+          "mode": "list",
+          "cachedResultName": "support-kb"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        -16,
+        -112
+      ],
+      "id": "b71bd662-e142-45e1-b38c-e059cd2c9421",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "NQEzYIp8XxBD6tAp",
+          "name": "Pinecone account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -176,
+        128
+      ],
+      "id": "93d69f3f-3a22-4a5c-95f7-40b288105614",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "FhyOf8oFso3M1XC0",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        128,
+        96
+      ],
+      "id": "c467d2b7-aad4-4b0b-9fea-ff960b7cb8a4",
+      "name": "Default Data Loader"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "1812e818-37a3-458b-93c0-65eaab0ea01e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7d3cad1334e8f5dc73b0754077c17f34a14ead5a76ba6f634ab86a00acc46355"
+  },
+  "nodeGroups": [],
+  "id": "twv97ZdkLVqKeVQ7",
+  "tags": []
+}
