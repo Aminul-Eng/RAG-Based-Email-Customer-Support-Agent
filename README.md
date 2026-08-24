@@ -69,6 +69,11 @@ This project leverages a modern and robust technology stack:
        ▼
 [Gmail: Reply to a message] ───> [Customer Inbox]
 
-## 🖼️ Workflow Screenshot
+## 🖼️ Workflow & Screenshots
+
+### 1. Workflow Architecture
 ![RAG Email Support Workflow](./workflow.png)
+
+### 2. Data Loader Component
+![Data Loader](./Data%20Loader.png)
 
